@@ -15,10 +15,22 @@ class CatRentalRequestsController < ApplicationController
   def create
     new_request = CatRentalRequest.new(request_params)
     if new_request.save
-      redirect_to cat_rental_requests_url
+      redirect_to cats_url
     else
       render html:"You have an error"
     end
+  end
+
+  def approve
+    request = CatRentalRequest.find_by_id(params[:cat_rental_request_id])
+    request.approve!
+    redirect_to cat_url(request.cat_id)
+  end
+
+  def deny
+    request = CatRentalRequest.find_by_id(params[:cat_rental_request_id])
+    request.deny!
+    redirect_to cat_url(request.cat_id)
   end
 
   private

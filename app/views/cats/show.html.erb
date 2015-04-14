@@ -32,6 +32,14 @@
       <%= rental.end_date %>
       <br>
       <strong>Status: <%= rental.status %></strong>
+      <% if rental.status == "PENDING" %>
+        <%= button_to [rental, :approve], method: :patch do %>
+          <strong>Approve</strong>
+        <% end %>
+        <%= button_to [rental, :deny], method: :patch do %>
+          <strong>Deny</strong>
+        <% end %>
+      <% end %>
     </ul>
-  </li> 
+  </li>
 <% end %>
