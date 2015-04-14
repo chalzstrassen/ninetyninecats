@@ -1,0 +1,15 @@
+<h1>Schedule of Cat Rentals</h1>
+
+<% @requests.each_with_index do |request, idx| %>
+<li>
+  <ul><strong>Start Date: </strong>
+    <%= request.start_date %>
+    <br>
+    <strong>End Date: </strong>
+    <%= request.end_date %>
+    <br>
+    <strong>Cat Name: </strong>
+    <%= @cats[idx].name %>
+  </ul>
+</li>
+<% end %>

@@ -21,3 +21,17 @@
     </tr>
   </tbody>
 </table>
+
+<h3>Scheduled Rental Periods</h3>
+<% @rentals.each do |rental| %>
+  <li>
+    <ul><strong>Start Date: </strong>
+      <%= rental.start_date %>
+      <br>
+      <strong>End Date: </strong>
+      <%= rental.end_date %>
+      <br>
+      <strong>Status: <%= rental.status %></strong>
+    </ul>
+  </li> 
+<% end %>
