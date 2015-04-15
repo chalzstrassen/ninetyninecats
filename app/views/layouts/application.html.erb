@@ -8,6 +8,16 @@
 </head>
 <body>
 
+<% if flash.now[:errors] %>
+  <% flash.now[:errors].each do |error| %>
+   <%= error %><br />
+  <% end %>
+<% end %>
+
+<% if flash[:notice] %>
+  <%= flash[:notice] %>
+<% end %>
+
 <%= yield %>
 
 </body>
