@@ -18,4 +18,9 @@ class ApplicationController < ActionController::Base
     current_user.try(:reset_session_token!)
     session[:session_token] = nil
   end
+
+  def owned_cat?(cat)
+    # return true if user owns the cat
+    current_user.id == cat.user_id
+  end
 end

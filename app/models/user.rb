@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
   validates :session_token, presence: true, uniqueness: true
 
   has_many :cats
-  
+  has_many :cat_rental_requests
+
   after_initialize { self.session_token ||= SecureRandom.urlsafe_base64(16) }
   attr_reader :password
 

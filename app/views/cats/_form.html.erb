@@ -4,7 +4,7 @@
 <form action="<%= cat_url(@cat) %>" method='POST'>
   <input type="hidden" name="_method" value="PATCH">
 <% else %>
-<<orm action="<%= cats_url %>" method='POST'>
+<form action="<%= cats_url %>" method='POST'>
 <% end %>
   <%= csrf_token %>
   <label>Name</label>

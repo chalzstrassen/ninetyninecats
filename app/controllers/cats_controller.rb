@@ -13,16 +13,15 @@ class CatsController < ApplicationController
     new_cat = Cat.new(cat_params)
     if current_user
       new_cat.user_id = current_user.id
+      if new_cat.save
+        redirect_to :cats
+      else
+        flash.now[:errors] = new_cat.errors.full_messages
+        render :new
+      end
     else
       flash[:notice] = "Please log in"
       redirect_to new_session_url
-    end
-
-    if new_cat.save
-      redirect_to :cats
-    else
-      flash.now[:errors] = new_cat.errors.full_messages
-      render :new
     end
   end
 

@@ -25,6 +25,9 @@
 <h3>Scheduled Rental Periods</h3>
 <% @rentals.each do |rental| %>
   <li>
+    <ul><strong> </strong>
+      <%= rental.user.user_name %>
+      <br>
     <ul><strong>Start Date: </strong>
       <%= rental.start_date %>
       <br>
@@ -32,7 +35,7 @@
       <%= rental.end_date %>
       <br>
       <strong>Status: <%= rental.status %></strong>
-      <% if rental.status == "PENDING" %>
+      <% if rental.status == "PENDING" && owned_cat?(@cat) %>
         <%= button_to [rental, :approve], method: :patch do %>
           <strong>Approve</strong>
         <% end %>

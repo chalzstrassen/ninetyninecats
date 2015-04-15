@@ -7,6 +7,7 @@ class CatRentalRequest < ActiveRecord::Base
   validate :overlapping_approved_requests
 
   belongs_to :cat
+  belongs_to :user
 
   def approve!
     self.status = "APPROVED" if self.status == "PENDING"

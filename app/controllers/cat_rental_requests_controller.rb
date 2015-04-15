@@ -1,5 +1,5 @@
 class CatRentalRequestsController < ApplicationController
-  before_action :check_user, only: [:create, :approve, :deny]
+  before_action :check_user, only: [:approve, :deny]
   def new
     @request = CatRentalRequest.new
     @cats = Cat.all
@@ -15,10 +15,13 @@ class CatRentalRequestsController < ApplicationController
 
   def create
     new_request = CatRentalRequest.new(request_params)
-    if new_request.save
-      redirect_to cats_url
-    else
-      render html:"You have an error"
+    if current_user
+      new_request.user_id = current_user.id 
+      if new_request.save
+        redirect_to cats_url
+      else
+        render html:"You have an error"
+      end
     end
   end
 
@@ -40,6 +43,19 @@ class CatRentalRequestsController < ApplicationController
     end
 
     def check_user
-      
+      if current_user.nil?
+        flash[:notice] = "Log in to see this page"
+        redirect_to new_session_url
+      else
+        unless owned_cat?(current_cat)
+          flash[:notice] = "You do not own this cat"
+          redirect_to cats_url
+        end
+      end
+    end
+
+    def current_cat
+      pending_request = CatRentalRequest.find_by_id(params[:cat_rental_request_id])
+      Cat.find_by_id(pending_request.cat_id)
     end
 end
