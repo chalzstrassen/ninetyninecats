@@ -1,4 +1,5 @@
 class CatRentalRequestsController < ApplicationController
+  before_action :check_user, only: [:create, :approve, :deny]
   def new
     @request = CatRentalRequest.new
     @cats = Cat.all
@@ -36,5 +37,9 @@ class CatRentalRequestsController < ApplicationController
   private
     def request_params
       params.require(:request).permit(:cat_id, :start_date, :end_date)
+    end
+
+    def check_user
+      
     end
 end

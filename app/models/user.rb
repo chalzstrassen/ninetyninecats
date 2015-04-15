@@ -1,10 +1,12 @@
 class User < ActiveRecord::Base
   validates :user_name, presence: true
   validates :password_digest, presence: { message: "Password can't be blank" }
-  validates :password, presence: true, length: { minimum: 6, allow_nil: true }
+  validates :password, length: { minimum: 6, allow_nil: true }
   validates :session_token, presence: true, uniqueness: true
 
-  after_initialize { self.reset_session_token! }
+  has_many :cats
+  
+  after_initialize { self.session_token ||= SecureRandom.urlsafe_base64(16) }
   attr_reader :password
 
   def self.find_by_credentials(user_name, password)
@@ -14,7 +16,9 @@ class User < ActiveRecord::Base
   end
 
   def reset_session_token!
-    self.session_token ||= SecureRandom.urlsafe_base64(16)
+    self.session_token = SecureRandom.urlsafe_base64(16)
+    self.save!
+    self.session_token
   end
 
   def password=(password)

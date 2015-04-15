@@ -1,5 +1,7 @@
 <h1>Sign up here</h1>
 
+<%= render partial: "layouts/flashmessages" %>
+
 <form action="<%= users_url %>" method="POST">
   <%= csrf_token %>
   <label for="user_name">Create a new user name</label>

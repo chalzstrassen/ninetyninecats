@@ -1,5 +1,5 @@
 <h1>Rent a cat</h1>
-
+<%= render partial: "layouts/flashmessages" %>
 <form action="<%= cat_rental_requests_url %>" method="POST">
   <%= csrf_token %>
   <label>Cat to rent</label>

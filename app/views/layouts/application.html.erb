@@ -8,16 +8,16 @@
 </head>
 <body>
 
-<% if flash.now[:errors] %>
-  <% flash.now[:errors].each do |error| %>
-   <%= error %><br />
-  <% end %>
-<% end %>
+<% if current_user.nil? %>
+<a href="<%= new_session_path %>">Log in</a>
+<% else %>
+<form action="<%= session_path %>" method="POST">
+  <%= csrf_token %>
+  <input type="hidden" name="_method" value="delete">
+  <button>Log out <%= current_user.user_name %></button>
+</form>
 
-<% if flash[:notice] %>
-  <%= flash[:notice] %>
 <% end %>
-
 <%= yield %>
 
 </body>

@@ -1,4 +1,5 @@
 class CatsController < ApplicationController
+  before_action :own_cat, only: [:edit, :update]
   def index
     @cats = Cat.all
   end
@@ -10,10 +11,18 @@ class CatsController < ApplicationController
 
   def create
     new_cat = Cat.new(cat_params)
+    if current_user
+      new_cat.user_id = current_user.id
+    else
+      flash[:notice] = "Please log in"
+      redirect_to new_session_url
+    end
+
     if new_cat.save
       redirect_to :cats
     else
-      raise "Error"
+      flash.now[:errors] = new_cat.errors.full_messages
+      render :new
     end
   end
 
@@ -38,5 +47,19 @@ class CatsController < ApplicationController
                                 :color,
                                 :birth_date,
                                 :description)
+  end
+
+  def own_cat
+    if current_user.nil?
+      flash[:notice] = "Please log in"
+      redirect_to new_session_url
+    else
+      cat = Cat.where(user_id: current_user.id)
+               .where(id: params[:id])
+      if cat.empty?
+        flash[:notice] = "You do not own this cat."
+        redirect_to cats_url
+      end
+    end
   end
 end

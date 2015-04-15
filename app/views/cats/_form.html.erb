@@ -1,3 +1,5 @@
+<%= render partial: "layouts/flashmessages" %>
+
 <% if @cat.persisted? %>
 <form action="<%= cat_url(@cat) %>" method='POST'>
   <input type="hidden" name="_method" value="PATCH">
